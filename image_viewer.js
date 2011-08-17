@@ -28,13 +28,19 @@
         var cmSpan       = "<span id='overlayText'> CM</span>";
         var pageInfoSpan = "<span id='overlayText'>" + (pageIndex + 1) + " / " + ImageList.length + "</span>";
         if (shortcut.commandMode) 
-          pageInfoSpan += cmSpan
+          pageInfoSpan += cmSpan;
         $(overlayDiv).html(pageInfoSpan); 
       },
       setupKeyBindings : function() {
         shortcut.commandModeListener = function(){methods.updateOverlay();};
         shortcut.remove("\\");
         shortcut.add("\\", function(){ shortcut.toggleCommandMode(); }, {'keycode': 220, 'require_command_mode':false});
+
+        shortcut.remove("l");
+        shortcut.add("l", function() { alert("blah"); });
+
+        shortcut.remote("j");
+        shorcut.add("j", function() { alert("blah"); });
       },
       setupInitialImage : function( image ) {
           $(mainDiv).append('<img class="image_viewer_img" src="' + image + '"/>');
@@ -48,7 +54,7 @@
         this.css('height', settings['height']);
         this.css('margin', 'auto');
         this.css('background-color', settings['background-color']);
-        this.append('<div id="overlay"></div>')
+        this.append('<div id="overlay"></div>');
       }
     };
 
