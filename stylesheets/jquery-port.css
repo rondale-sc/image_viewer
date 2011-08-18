@@ -1,26 +1,46 @@
-body                  { background-color:#423F40;
-                        color:#E6E7F2; }
+body                  { background-color:#BFBFBF;
+                        color:#423F40;
+                        font-family:"helvetica neue", "sans-serif"}
 
-#ImageViewer          { border:5px solid #777;
-                        position:relative; }
+h1 { font-family:"Amaranth";font-size:90px;}
 
-.image_viewer_img     { width:100%;
-                        height:100%;
-                        margin:auto;
-                        top:0;
-                        left:0;
-                        position:absolute;
-                        display:block; }
+#wrapper { width:950px;margin:auto;}
 
-.overlayText          { size:10px;
-                        font-weight:200; }
-
-#overlay              { height:18px;
-                        width:60px;
-                        text-align:center;
-                        top:5%;
-                        left:80%;
-                        background-color:#423F40;
-                        position:absolute;
-                        z-index: 10;
-                        border:1px solid #777}
+.image_container {
+    margin-right:auto;
+    margin-left:auto;
+}
+.image-viewer-container {
+    margin-right:auto;
+    margin-left:auto;
+    border: 1px solid black;
+    width: 79%;
+    min-width: 950px;
+    padding: 2px;
+    margin-bottom: 10px;
+    position:relative;
+}
+.image-overlay {
+    position: absolute; 
+    top: 5%;
+    left: 85%;
+    padding: 2px 1% 2px 1%;
+    border:1px solid #777;
+    background:transparent none repeat scroll 0 0;
+    color: white;
+    font-weight: 100;
+    z-index:10;
+}
+.image-viewer {
+    height: 100%;
+    width: 97%;
+    overflow: auto;
+    margin-right:auto;
+    margin-left:auto;
+    position:relative;
+}
+.image-comparison-form {
+  width:  18%;
+  float:  left;
+}
+.center {text-align:center;}
