@@ -1,7 +1,6 @@
 (function($) {
   $.fn.imageViewer = function(method) {
     var settings = {
-      'mainDiv': '#ImageViewer',
       'overlayDiv': '#overlay',
       'background-color': '#777',
       'width': 500,
@@ -10,7 +9,7 @@
       'increment': 25
     };
     var ImageList;
-    var mainDiv;
+    var mainDiv = this;
     var overlayDiv;
     var pageIndex;
 
@@ -37,24 +36,46 @@
         shortcut.add("\\", function(){ shortcut.toggleCommandMode(); }, {'keycode': 220, 'require_command_mode':false});
 
         shortcut.remove("l");
-        shortcut.add("l", function() { alert("blah"); });
+        shortcut.add("l", function() { methods.changePage("Right"); });
 
-        shortcut.remote("j");
-        shorcut.add("j", function() { alert("blah"); });
+        shortcut.remove("j");
+        shortcut.add("j", function() { methods.changePage("Left"); });
+      },
+      changePage : function( direction ) {
+        if (direction == "Right") {
+          if (pageIndex != ImageList.length - 1) {
+            var list_position = pageIndex + 1
+            pageIndex += 1
+
+            $('#ImageViewer img').remove();
+            $(mainDiv).append('<img class="image_viewer_img" src="' + ImageList[list_position] + '"/>');
+            methods.updateOverlay();
+          };
+        } else if (direction == "Left") {
+
+          if (!pageIndex == 0) {
+            var list_position = pageIndex - 1
+            pageIndex = pageIndex - 1
+
+            $('#ImageViewer img').remove();
+            $(mainDiv).append('<img class="image_viewer_img" src="' + ImageList[list_position] + '"/>');
+            methods.updateOverlay();
+          };
+        };
       },
       setupInitialImage : function( image ) {
           $(mainDiv).append('<img class="image_viewer_img" src="' + image + '"/>');
           pageIndex = 0;
       },
       setupContainers : function(){
-        mainDiv = settings['mainDiv'];
         overlayDiv = settings['overlayDiv'];
-        
+        this.append('<div id="overlay"></div>');
+
         this.css('width', settings['width']);
         this.css('height', settings['height']);
         this.css('margin', 'auto');
         this.css('background-color', settings['background-color']);
-        this.append('<div id="overlay"></div>');
+
       }
     };
 
