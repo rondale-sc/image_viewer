@@ -4,7 +4,6 @@
       'width': 650,
       'height': 500,
       'zoomLevel': 75,
-      'zoomLevel' : 75,
       'increment' : 25,
       'images' : null,
       'mainDivId' : this,
