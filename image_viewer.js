@@ -1,7 +1,7 @@
 (function($) {
   $.fn.imageViewer = function(method) {
     var settings = {
-      'width': 500,
+      'width': 650,
       'height': 500,
       'zoomLevel': 75,
       'zoomLevel' : 75,
