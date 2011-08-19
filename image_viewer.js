@@ -4,7 +4,6 @@
       'width': 650,
       'height': 500,
       'zoomLevel': 75,
-      'zoomLevel' : 75,
       'increment' : 25,
       'images' : null,
       'mainDivId' : this,
@@ -24,12 +23,12 @@
     var ImageViewer = {
       init : function(image_path_array, options){
         // set the mainDivId if passed in
-        main_div_id = (settings["mainDivId"]).attr("id")
+        main_div_id = (settings["mainDivId"]).attr("id");
         if ( options ) { 
                 $.extend( settings, options );
               }
 
-        this.data("settings", settings)
+        this.data("settings", settings);
 
         if (main_div_id != undefined)
           settings["mainDivId"] = main_div_id;
@@ -198,6 +197,7 @@
         ImageViewer.updateOverlay();
       },
       rotate: function(increment){
+        console.log("increment")
           image = '#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"];
           current_angle = $(image).attr('data-angle');
 
@@ -213,11 +213,11 @@
     };
 
     if ( ImageViewer[method] ) {
-      var settings = this.data("settings")
+      var settings = this.data("settings");
       return ImageViewer[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
     }  else if ( settings[method] ) {
-      var settings = this.data("settings")
-      return settings[ method ]
+      var settings = this.data("settings");
+      return settings[ method ];
     } else if ( typeof method === 'object' || ! method ) {
       return ImageViewer.init.apply( this, arguments);
     }  else {
