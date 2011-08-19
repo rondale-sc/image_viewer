@@ -46,7 +46,7 @@ In order to access these shortcuts press "/"(slash) to enable command-mode. Once
 These keys can be changed by modifying ImageViewer.setupKeyBindings().  However, they were chosen so that a user would not have to leave
 the home row keys.
 
-These shortcuts depend on a library found [here](http://www.mattytemple.com/2010/04/shortcut-js-add-keyboard-shortcuts-to-your-site/) by Mathew Temple
+These are created using a nifty library found [here](http://www.mattytemple.com/2010/04/shortcut-js-add-keyboard-shortcuts-to-your-site/) by Mathew Temple
 
 * "i" = Zoom the image in.
 * "k" = Zoom the image out.
