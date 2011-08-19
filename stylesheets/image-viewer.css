@@ -43,8 +43,8 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
     z-index:10;
 }
 .image-viewer {
-    height: 90%;
-    width: 97%;
+    height: 100%;
+    width: 100%;
     overflow: auto;
     margin-right:auto;
     margin-left:auto;
