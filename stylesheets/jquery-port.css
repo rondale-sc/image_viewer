@@ -6,6 +6,11 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
 
 #wrapper { width:950px;margin:auto;}
 
+#key-bindings {
+  width:265px;
+  padding-top:270px;
+  font-size:12px;
+}
 #nav_links td, #nav_links a {
   text-align:center;
   font-size:13px;
