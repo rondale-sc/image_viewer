@@ -29,6 +29,8 @@
                 $.extend( settings, options );
               }
 
+        this.data("settings", settings)
+
         if (main_div_id != undefined)
           settings["mainDivId"] = main_div_id;
 
@@ -39,9 +41,9 @@
         ImageViewer.handleWindowResize();
       },
       reload : function(){
-        image_array                 = ImageViewer.images;
+        image_array                 = settings["images"];
         settings["zoomLevel"]       = 75;
-        ImageViewer.images          = null;
+        settings["images"]          = null;
         settings["mainDiv"]         = null;
         settings["imageOverlay"]    = null;
         settings["imageViewerImg"]  = null;
@@ -63,7 +65,7 @@
 
       },
       setupImages : function(images){
-        ImageViewer.images = images;
+        settings["images"] = images;
         var style = "";
 
         $.each(images, function(index, image){
@@ -151,12 +153,10 @@
           object_to_zoom = object_to_zoom.children().first();
 
         object_to_zoom.css('width', settings["zoomLevel"] + '%');
-
-        ImageViewer.updateBookmarks(previous_zoomLevel);
         ImageViewer.scroll(0,0);
       },
       zoom : function(increment){
-        if(increment < 0 && settings["zoomLevel"] <= ImageViewer.increment) increment = 0;
+        if(increment < 0 && settings["zoomLevel"] <= settings["increment"]) increment = 0;
 
         ImageViewer.zoomAbsolute(settings["zoomLevel"] + increment);
       },
@@ -166,8 +166,8 @@
       },
       scrollPage : function(increment){
         if(settings["imageIndex"] == 0 && increment == -1) {
-          settings["imageIndex"] = (ImageViewer.images.length - 1);
-        } else if(settings["imageIndex"] == (ImageViewer.images.length - 1) && increment == 1){
+          settings["imageIndex"] = (settings["images"].length - 1);
+        } else if(settings["imageIndex"] == (settings["images"].length - 1) && increment == 1){
           settings["imageIndex"] = 0;
         } else {
           settings["imageIndex"] += increment;
@@ -177,7 +177,7 @@
       },
       showPage : function(page){
         settings["imageIndex"] = page;
-
+        
         settings["currentImageDiv"].hide();
         settings["currentImageDiv"] = $('#' + settings["mainDivId"] + '-image-viewer-' + page);
         settings["imageViewerImg"] = $('#' + settings["mainDivId"] + '-full-image-' + page);
@@ -186,7 +186,7 @@
         ImageViewer.updateOverlay();
       },
       updateOverlay : function(){
-        var s = (settings["imageIndex"] + 1) + ' / ' + ImageViewer.images.length;
+        var s = (settings["imageIndex"] + 1) + ' / ' + settings["images"].length;
 
         if(shortcut.commandMode)
           s += ' CM';
@@ -196,13 +196,6 @@
       toggleCommandMode : function(){
         settings["commandMode"] = (!settings["commandMode"]);
         ImageViewer.updateOverlay();
-      },
-      updateBookmarks: function(previous_zoom){
-       $('.bookmark').each(function(index){
-         b = $(this);
-         calculated_position = (b.css('top').replace('px','') / (previous_zoom /100)) * (settings["zoomLevel"] / 100);
-         b.css('top', calculated_position + 'px');
-       });
       },
       rotate: function(increment){
           image = '#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"];
@@ -220,11 +213,15 @@
     };
 
     if ( ImageViewer[method] ) {
-      return ImageViewer[ method ].apply( this, Array.prototype.slice.call( arguments, 1 ));
+      var settings = this.data("settings")
+      return ImageViewer[method].apply( this, Array.prototype.slice.call( arguments, 1 ));
+    }  else if ( settings[method] ) {
+      var settings = this.data("settings")
+      return settings[ method ]
     } else if ( typeof method === 'object' || ! method ) {
       return ImageViewer.init.apply( this, arguments);
-    } else {
-      $.error( 'Method ' +  method + ' does not exist on jQuery.tooltip' );
+    }  else {
+      $.error( 'Method ' +  method + ' does not exist on jQuery.imageViewer' );
     }
   };
 })(jQuery);
