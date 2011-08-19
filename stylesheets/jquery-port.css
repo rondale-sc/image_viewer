@@ -8,14 +8,14 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
 
 #nav_links td, #nav_links a {
   text-align:center;
-  font-size:14px;
+  font-size:13px;
   font-weight:500;
   padding:2px;
   color:#AEBFD0;
 }
 #nav_links a:hover {
   text-align:center;
-  font-size:14px;
+  font-size:13px;
   font-weight:500;
   padding:2px;
   background-color:#254668;
