@@ -137,8 +137,6 @@
       setupHeight : function(){
         settings["mainDiv"].css('height', settings["height"]+ 'px');
         settings["mainDiv"].css('top', '0px');
-
-        //settings["mainDiv"].scrollTo();
       },
       handleWindowResize: function(){
         $(window).bind('resize', ImageViewer.setupHeight);
@@ -148,15 +146,12 @@
         settings["zoomLevel"] = zoomLevel;
 
         object_to_zoom = $('#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"]);
-        if (object_to_zoom.attr('data-angle') != undefined)
-          object_to_zoom = object_to_zoom.children().first();
 
         object_to_zoom.css('width', settings["zoomLevel"] + '%');
         ImageViewer.scroll(0,0);
       },
       zoom : function(increment){
         if(increment < 0 && settings["zoomLevel"] <= settings["increment"]) increment = 0;
-
         ImageViewer.zoomAbsolute(settings["zoomLevel"] + increment);
       },
       scroll : function(left, top){
@@ -197,17 +192,17 @@
         ImageViewer.updateOverlay();
       },
       rotate: function(increment){
-        console.log("increment")
           image = '#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"];
-          current_angle = $(image).attr('data-angle');
-
+          current_angle = $(image).attr('angle');
+          
           if (current_angle == undefined)
             current_angle = 0;
 
           $(image).css('width', '100%');
           $(image).rotate(parseInt(current_angle, 10) + increment);
           settings["imageViewerImg"] = $(image);
-          settings["imageViewerImg"].attr('data-angle',(parseInt(current_angle, 10) + increment).toString());
+
+          settings["imageViewerImg"].attr('angle',(parseInt(current_angle, 10) + increment).toString());
           ImageViewer.zoomAbsolute(75);
         }
     };
