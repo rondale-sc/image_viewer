@@ -48,7 +48,7 @@ the home row keys.
  
 ### Contributions ###
 
-Pro Medical, Inc. (promedical)[https://github.com/promedical] paid for development time on this small project some time back and has continued 
+Pro Medical, Inc. [promedical](https://github.com/promedical) paid for development time on this small project some time back and has continued 
 to support our effort to open-source it.
 
 Robert Jackson [rjackson](https://github.com/rjackson) came up with the idea  a long while ago and 
