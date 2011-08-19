@@ -1,9 +1,7 @@
 (function($) {
   $.fn.imageViewer = function(method) {
     var settings = {
-      'overlayDiv': '#overlay',
-      'background-color': '#777',
-      'width': 500,
+      'width': 650,
       'height': 500,
       'zoomLevel': 75,
       'zoomLevel' : 75,
@@ -30,11 +28,9 @@
         if ( options ) { 
                 $.extend( settings, options );
               }
-        
+
         if (main_div_id != undefined)
           settings["mainDivId"] = main_div_id;
-        else
-          settings["mainDivId"]  = 'ImageViewer';
 
         ImageViewer.setupContainers();
         ImageViewer.setupKeyBindings();
@@ -57,8 +53,10 @@
       },
       setupContainers : function(){
         settings["mainDiv"] = $('#' + settings["mainDivId"]);
+        
         settings["mainDiv"].empty();
         settings["mainDiv"].addClass('image-viewer-container');
+        settings["mainDiv"].css("width", settings["width"]);
 
         settings["mainDiv"].append('<div id="' + settings["mainDivId"] + '-image-overlay" class="image-overlay"></div>');
         settings["imageOverlay"] = $('#' + settings["mainDivId"] + '-image-overlay');

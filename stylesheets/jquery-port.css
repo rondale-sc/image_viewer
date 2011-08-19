@@ -4,7 +4,7 @@ body                  { background-color:#BFBFBF;
 
 h1 { font-family:"Amaranth";font-size:90px;}
 
-#wrapper { width:950px;margin:auto;}
+#wrapper { width:650px;margin:auto;}
 
 .image_container {
     margin-right:auto;
@@ -14,8 +14,6 @@ h1 { font-family:"Amaranth";font-size:90px;}
     margin-right:auto;
     margin-left:auto;
     border: 1px solid black;
-    width: 79%;
-    min-width: 950px;
     padding: 2px;
     margin-bottom: 10px;
     position:relative;
