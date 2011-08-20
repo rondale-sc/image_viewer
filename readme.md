@@ -56,6 +56,7 @@ These are created using a nifty library found [here](http://www.mattytemple.com/
 * "d" = Scroll Image downward (only available if image is taller than container).
 * "s" = Scroll Image to left (only available if image is wider than container).
 * "f" = Scroll Image to right (only available if image is wider than container).
+* "r" = Rotate image 90 degrees clockwise
  
 ### Contributions ###
 
@@ -65,5 +66,7 @@ to support our effort to open-source it.
 Robert Jackson [rjackson](https://github.com/rjackson) came up with the idea  a long while ago and 
 together we wrote the initial rendition of the script which is still used on multiple production sites. 
 
-You for reading this all the way through.  Please fork, use, and enjoy this project.  I've had a great time working on it, and I hope that
+---
+
+Thank you for reading this all the way through.  Please fork, use, and enjoy this project.  I've had a great time working on it, and I hope that
 you will find it useful.
