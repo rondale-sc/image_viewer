@@ -33,7 +33,7 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
 }
 .image-overlay {
     position: absolute; 
-    top: 5%;
+    top: 7%;
     left: 85%;
     padding: 2px 1% 2px 1%;
     border:1px solid #777;
