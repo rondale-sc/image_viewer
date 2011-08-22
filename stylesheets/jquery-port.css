@@ -11,7 +11,8 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
   padding-top:270px;
   font-size:12px;
 }
-#nav_links td, #nav_links a {
+.nav_links {width:100%;}
+.nav_links td, .nav_links a {
   text-align:center;
   font-size:13px;
   font-weight:500;
@@ -29,7 +30,7 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
 	margin: 0 auto;
 	overflow: hidden;
 }
-#nav_links a:hover {
+.nav_links a:hover {
   text-align:center;
   font-size:13px;
   font-weight:500;

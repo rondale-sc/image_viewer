@@ -168,13 +168,13 @@
           var footer = $('#footer');
           var footer_height = 0;
           
-          if (menu) {
+          if (menu.length >= 1) {
             var menu_offset = menu.offset().top + menu.height() + 7;
           } else {
             var menu_offset = 0;
           }
 
-          if(footer){
+          if(footer.length >= 1){
             var footer_height = footer.height() + 7;
           } else {
             var footer_height = 0;
