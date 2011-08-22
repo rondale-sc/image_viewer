@@ -64,14 +64,16 @@
                       '<td>' + ImageViewer.createNavLink('\'scroll\', 0, -1 * ' + settings["increment"], 'up') + '</td>' + 
                       '<td>' + ImageViewer.createNavLink('\'scroll\', 0,' + settings["increment"], 'down') + '</td>' + 
                       '<td>' + ImageViewer.createNavLink('\'zoom\',' + settings["increment"], 'zoom in') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'zoom\', -1 * ' + settings["increment"], 'zoom out') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'zoom\', -1 * ' + settings["increment"], 'zoom out') + '</td>' +
+                      '<td>' + ImageViewer.createNavLink('\'rotate\', 90', 'rotate') + '</td>' +  
+                      '<td>' + ImageViewer.createNavLink('\'print\'', 'print') + '</td>' +  
                     '</tr>' +
                 '</table>' 
 
         settings["mainDiv"].prepend(table)
       },
       createNavLink : function( call, name ) {
-        var div_id = '#' + $('#' + settings["mainDivId"]).attr("id");
+        var div_id = '#' + settings["mainDivId"];
 
         return '<a href="#" onclick="' +
                  '$(\'' + div_id + '\')' +
