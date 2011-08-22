@@ -11,34 +11,6 @@
   <a href="https://github.com/promedical/image_viewer"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://a248.e.akamai.net/assets.github.com/img/edc6dae7a1079163caf7f17c60495bbb6d027c93/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub"></a>
   <div id="wrapper">
     <h1>ImageViewer</h1>
-    <table id="nav_links" style="width:100%;"> 
-      <tr>
-        <td>
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scrollPage', -1);">&larr; Previous Image</a> 
-          <span>&nbsp;|&nbsp;</span> 
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scrollPage', 1);">Next Image &rarr;</a> 
-        </td> 
-        <td class="nav_link"> 
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scroll',-1 *$('#ImageViewer').imageViewer('increment'), 0);">Left</a> 
-          <span>&nbsp;|&nbsp;</span> 
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scroll', $('#ImageViewer').imageViewer('increment'), 0);">Right</a> 
-        </td> 
-        <td class="nav_link">
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scroll', 0, -1 * $('#ImageViewer').imageViewer('increment'));">Up</a> 
-          <span>&nbsp;|&nbsp;</span> 
-          <a href="#" onclick="$('#ImageViewer').imageViewer('scroll', 0, $('#ImageViewer').imageViewer('increment'));">Down</a> 
-        </td> 
-        <td class="nav_link">
-          <a href="#" onclick="$('#ImageViewer').imageViewer('zoom', $('#ImageViewer').imageViewer('increment'));">( &#43; ) Zoom In</a> 
-          <span>&nbsp;|&nbsp;</span> 
-          <a href="#" onclick="$('#ImageViewer').imageViewer('zoom', -1 * $('#ImageViewer').imageViewer('increment'));">Zoom Out ( &#45; )</a> 
-        </td> 
-        <td><a href="#" onclick="$('#ImageViewer').imageViewer('rotate', 90);">Rotate</a>
-          <span>&nbsp;|&nbsp;</span>
-           <a href="#" onclick="$('#ImageViewer').imageViewer('print');">Print</a>
-        </td>
-      </tr> 
-    </table>
     <div class="column" id="key-bindings">
        <h5>Legend</h5>
        <p>"/" (slash) to toggle Command Mode</p>

@@ -3,6 +3,7 @@
     var settings = {
       'width': 650,
       'height': 500,
+      'nav_links':true,
       'zoomLevel': 75,
       'increment' : 25,
       'images' : null,
@@ -37,6 +38,7 @@
         ImageViewer.setupKeyBindings();
         ImageViewer.setupImages(image_path_array);
         ImageViewer.setupHeight();
+        if (settings['nav_links'] == true) {ImageViewer.createNavTable();};
         ImageViewer.handleWindowResize();
       },
       reload : function(){
@@ -51,6 +53,31 @@
         settings["currentImageDiv"] = null;
 
         ImageViewer.init(image_array);
+      },
+      createNavTable : function () {
+        table = '<table id="nav_links" style="width:100%;padding-bottom:2px;">' + 
+                    '<tr>' +
+                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', -1', 'Previous') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', 1', 'Next') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scroll\', -1 * ' + settings["increment"] +  ',0', 'Left') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scroll\',' + settings["increment"] + ',0', 'right') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scroll\', 0, -1 * ' + settings["increment"], 'up') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scroll\', 0,' + settings["increment"], 'down') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'zoom\',' + settings["increment"], 'zoom in') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'zoom\', -1 * ' + settings["increment"], 'zoom out') + '</td>' + 
+                    '</tr>' +
+                '</table>' 
+
+        settings["mainDiv"].prepend(table)
+      },
+      createNavLink : function( call, name ) {
+        var div_id = '#' + $('#' + settings["mainDivId"]).attr("id");
+
+        return '<a href="#" onclick="' +
+                 '$(\'' + div_id + '\')' +
+                 '.imageViewer(' + call + ')">' + 
+                 name +
+               '</a>'
       },
       setupContainers : function(){
         settings["mainDiv"] = $('#' + settings["mainDivId"]);
