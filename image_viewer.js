@@ -1,8 +1,7 @@
 (function($) {
   $.fn.imageViewer = function(method) {
     var settings = {
-      'width': 650,
-      'height': 500,
+      'height': '550',
       'nav_links':true,
       'zoomLevel': 75,
       'increment' : 25,
@@ -55,10 +54,10 @@
         ImageViewer.init(image_array);
       },
       createNavTable : function () {
-        table = '<table id="nav_links" style="width:100%;padding-bottom:2px;">' + 
+        table = '<table class="nav_links">' + 
                     '<tr>' +
-                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', -1', 'Previous') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', 1', 'Next') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', -1', 'previous') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', 1', 'next') + '</td>' + 
                       '<td>' + ImageViewer.createNavLink('\'scroll\', -1 * ' + settings["increment"] +  ',0', 'Left') + '</td>' + 
                       '<td>' + ImageViewer.createNavLink('\'scroll\',' + settings["increment"] + ',0', 'right') + '</td>' + 
                       '<td>' + ImageViewer.createNavLink('\'scroll\', 0, -1 * ' + settings["increment"], 'up') + '</td>' + 
@@ -164,8 +163,26 @@
         shortcut.add('r', function(){ ImageViewer.rotate(90); });
       },
       setupHeight : function(){
-        settings["mainDiv"].css('height', settings["height"]+ 'px');
-        settings["mainDiv"].css('top', '0px');
+          var window_height = $(window).height();
+          var menu = $('#header');
+          var footer = $('#footer');
+          var footer_height = 0;
+          
+          if (menu) {
+            var menu_offset = menu.offset().top + menu.height() + 7;
+          } else {
+            var menu_offset = 0;
+          }
+
+          if(footer){
+            var footer_height = footer.height() + 7;
+          } else {
+            var footer_height = 0;
+          }
+          var new_height = window_height - menu_offset - footer_height - 20;
+
+          settings["mainDiv"].css('height', new_height + 'px');
+          settings["mainDiv"].css('top', '0px');
       },
       handleWindowResize: function(){
         $(window).bind('resize', ImageViewer.setupHeight);
