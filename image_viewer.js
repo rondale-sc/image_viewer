@@ -78,7 +78,7 @@
                                           '<img id="' + settings["mainDivId"] + '-full-image-' + index + '" ' +
                                               'src="' + image + '" ' +
                                               'alt="Full Image" ' +
-                                              'style="width: 75%;"></img>' +
+                                              'style="width: 75%;"/>' +
                                        '</div>');
 
         });
@@ -204,7 +204,27 @@
 
           settings["imageViewerImg"].attr('angle',(parseInt(current_angle, 10) + increment).toString());
           ImageViewer.zoomAbsolute(75);
-        }
+        },
+      print : function() {
+        var myWindow = window.open("", '_newtab') ;
+        var image_tags = "";
+
+        $.each(settings["images"], function(index, image) {
+          image_tags += '<img style="float:left;clear:both;" src="' + image + '" />';
+        });
+
+        var print_script = '<script type="text/javascript">' +
+                            'function PrintWindow() { window.print();CheckWindowState(); }' +
+                              'function CheckWindowState(){' +
+                              'if(document.readyState=="complete")' +
+                                '{window.close();}' +
+                              'else{setTimeout("CheckWindowState()", 2000)}}' +
+                                'PrintWindow();' + 
+                            '</script>' 
+
+        myWindow.document.write(image_tags + print_script)
+        myWindow.document.close()
+      }
     };
 
     if ( ImageViewer[method] ) {
