@@ -19,19 +19,78 @@
     var mainDiv = this;
     var overlayDiv;
     var pageIndex;
+    var self = $.fn.imageViewer;
+
+    $.fn.imageViewer.scrollPage = function(increment){
+      if(settings["imageIndex"] == 0 && increment == -1) {
+        settings["imageIndex"] = (settings["images"].length - 1);
+      } else if(settings["imageIndex"] == (settings["images"].length - 1) && increment == 1){
+        settings["imageIndex"] = 0;
+      } else {
+        settings["imageIndex"] += increment;
+      };
+      ImageViewer.showPage(settings["imageIndex"]);
+    };
+
+    $.fn.imageViewer.scroll =  function(left, top){
+      settings["currentImageDiv"].scrollTop(settings["currentImageDiv"].scrollTop() + top);
+      settings["currentImageDiv"].scrollLeft(settings["currentImageDiv"].scrollLeft() + left);
+    };
+
+    $.fn.imageViewer.zoom = function(increment){
+      if(increment < 0 && settings["zoomLevel"] <= settings["increment"]) increment = 0;
+      ImageViewer.zoomAbsolute(settings["zoomLevel"] + increment);
+    };
+
+    $.fn.imageViewer.rotate = function(increment){
+        image = '#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"];
+        current_angle = $(image).attr('angle');
+
+        if (current_angle == undefined) {
+          current_angle = 0;
+        };
+
+        $(image).css('width', '100%');
+        $(image).rotate(parseInt(current_angle, 10) + increment);
+        settings["imageViewerImg"] = $(image);
+
+        settings["imageViewerImg"].attr('angle',(parseInt(current_angle, 10) + increment).toString());
+        ImageViewer.zoomAbsolute(75);
+      };
+
+      $.fn.imageViewer.print = function() {
+        var myWindow = window.open("", '_newtab');
+        var image_tags = "";
+
+        $.each(settings["images"], function(index, image) {
+          image_tags += '<img style="float:left;clear:both;" src="' + image + '" />';
+        });
+
+        var print_script = '<script type=\'text/javascript\'>' +
+                            'function PrintWindow() { window.print();CheckWindowState(); }' +
+                              'function CheckWindowState(){' +
+                              'if(document.readyState=="complete")' +
+                                '{window.close();}' +
+                              'else{setTimeout("CheckWindowState()", 2000)}}' +
+                                'PrintWindow();' + 
+                            '</script>';
+
+        myWindow.document.write(image_tags + print_script);
+        myWindow.document.close();
+      };
 
     var ImageViewer = {
       init : function(image_path_array, options){
-        // set the mainDivId if passed in
-        main_div_id = (settings["mainDivId"]).attr("id")
+        main_div_id = (settings["mainDivId"]).attr("id");
         if ( options ) { 
-                $.extend( settings, options );
-              }
+          $.extend( settings, options );
+        };
 
         this.data("settings", settings)
 
-        if (main_div_id != undefined)
+        if (main_div_id != undefined) {
           settings["mainDivId"] = main_div_id;
+        };
 
         ImageViewer.setupContainers();
         ImageViewer.setupKeyBindings();
@@ -54,42 +113,40 @@
         ImageViewer.init(image_array);
       },
       createNavTable : function () {
+        console.log(ImageViewer.createNavLink('scroll(-1 * ' + settings["increment"], 'left'))
         table = '<table class="nav_links">' + 
                     '<tr>' +
-                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', -1', 'previous') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scrollPage\', 1', 'next') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scroll\', -1 * ' + settings["increment"] +  ',0', 'Left') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scroll\',' + settings["increment"] + ',0', 'right') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scroll\', 0, -1 * ' + settings["increment"], 'up') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'scroll\', 0,' + settings["increment"], 'down') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'zoom\',' + settings["increment"], 'zoom in') + '</td>' + 
-                      '<td>' + ImageViewer.createNavLink('\'zoom\', -1 * ' + settings["increment"], 'zoom out') + '</td>' +
-                      '<td>' + ImageViewer.createNavLink('\'rotate\', 90', 'rotate') + '</td>' +  
-                      '<td>' + ImageViewer.createNavLink('\'print\'', 'print') + '</td>' +  
+                      '<td>' + ImageViewer.createNavLink('scrollPage(-1)', 'previous') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('scrollPage(1)', 'next') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('scroll(-1 * ' + settings["increment"] + ",0)", 'left') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('scroll(' + settings["increment"] + ",0)", 'right') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('scroll(0, -1 * ' + settings["increment"] + ")", 'up') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('scroll(0,' + settings["increment"] + ")", 'down') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('zoom(' + settings["increment"] + ")", 'zoom in') + '</td>' + 
+                      '<td>' + ImageViewer.createNavLink('zoom(-1 * ' + settings["increment"] + ")", 'zoom out') + '</td>' +
+                      '<td>' + ImageViewer.createNavLink('rotate(90)', 'rotate') + '</td>' +  
+                      '<td>' + ImageViewer.createNavLink('print()', 'print') + '</td>' +  
                     '</tr>' +
-                '</table>' 
+                '</table>';
 
-        settings["mainDiv"].prepend(table)
+        settings["mainDiv"].prepend(table);
       },
       createNavLink : function( call, name ) {
         var div_id = '#' + settings["mainDivId"];
 
         return '<a href="#" onclick="' +
                  '$(\'' + div_id + '\')' +
-                 '.imageViewer(' + call + ')">' + 
+                 '.imageViewer.' +  call + '">' + 
                  name +
-               '</a>'
+               '</a>';
       },
       setupContainers : function(){
         settings["mainDiv"] = $('#' + settings["mainDivId"]);
-        
         settings["mainDiv"].empty();
         settings["mainDiv"].addClass('image-viewer-container');
         settings["mainDiv"].css("width", settings["width"]);
-
         settings["mainDiv"].append('<div id="' + settings["mainDivId"] + '-image-overlay" class="image-overlay"></div>');
         settings["imageOverlay"] = $('#' + settings["mainDivId"] + '-image-overlay');
-
       },
       setupImages : function(images){
         settings["images"] = images;
@@ -140,27 +197,27 @@
         shortcut.remove("\\");
         shortcut.add("\\", function(){ shortcut.toggleCommandMode(); }, {'keycode': 220, 'require_command_mode':false});
         shortcut.remove('k');
-        shortcut.add('k', function(){ ImageViewer.zoom(-1 * settings["increment"]); });
+        shortcut.add('k', function(){ self.zoom(-1 * settings["increment"]); });
         shortcut.remove('i');
-        shortcut.add('i', function(){ ImageViewer.zoom(settings["increment"]); });
+        shortcut.add('i', function(){ self.zoom(settings["increment"]); });
         shortcut.remove('e');
-        shortcut.add('e', function(){ ImageViewer.scroll(0,-1 * settings["increment"]); });
+        shortcut.add('e', function(){ self.scroll(0,-1 * settings["increment"]); });
         shortcut.remove('d');
-        shortcut.add('d', function(){ ImageViewer.scroll(0,settings["increment"]); });
+        shortcut.add('d', function(){ self.scroll(0,settings["increment"]); });
         shortcut.remove('a');
-        shortcut.add('a', function(){ ImageViewer.scroll(0,-1 * (settings["increment"] * 5)); });
+        shortcut.add('a', function(){ self.scroll(0,-1 * (settings["increment"] * 5)); });
         shortcut.remove(';');
-        shortcut.add(';', function(){ ImageViewer.scroll(0,(settings["increment"] * 5)); });
+        shortcut.add(';', function(){ self.scroll(0,(settings["increment"] * 5)); });
         shortcut.remove('f');
-        shortcut.add('f', function(){ ImageViewer.scroll(settings["increment"],0);});
+        shortcut.add('f', function(){ self.scroll(settings["increment"],0);});
         shortcut.remove('s');
-        shortcut.add('s', function(){ ImageViewer.scroll((-1 * settings["increment"]),0); });
+        shortcut.add('s', function(){ self.scroll((-1 * settings["increment"]),0); });
         shortcut.remove('j');
-        shortcut.add('j', function(){ ImageViewer.scrollPage(-1); });
+        shortcut.add('j', function(){ self.scrollPage(-1); });
         shortcut.remove('l');
-        shortcut.add('l', function(){ ImageViewer.scrollPage(1); });
+        shortcut.add('l', function(){ self.scrollPage(1); });
         shortcut.remove('r');
-        shortcut.add('r', function(){ ImageViewer.rotate(90); });
+        shortcut.add('r', function(){ self.rotate(90); });
       },
       setupHeight : function(){
           var window_height = $(window).height();
@@ -194,26 +251,7 @@
         object_to_zoom = $('#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"]);
 
         object_to_zoom.css('width', settings["zoomLevel"] + '%');
-        ImageViewer.scroll(0,0);
-      },
-      zoom : function(increment){
-        if(increment < 0 && settings["zoomLevel"] <= settings["increment"]) increment = 0;
-        ImageViewer.zoomAbsolute(settings["zoomLevel"] + increment);
-      },
-      scroll : function(left, top){
-        settings["currentImageDiv"].scrollTop(settings["currentImageDiv"].scrollTop() + top);
-        settings["currentImageDiv"].scrollLeft(settings["currentImageDiv"].scrollLeft() + left);
-      },
-      scrollPage : function(increment){
-        if(settings["imageIndex"] == 0 && increment == -1) {
-          settings["imageIndex"] = (settings["images"].length - 1);
-        } else if(settings["imageIndex"] == (settings["images"].length - 1) && increment == 1){
-          settings["imageIndex"] = 0;
-        } else {
-          settings["imageIndex"] += increment;
-        }
-
-        ImageViewer.showPage(settings["imageIndex"]);
+        self.scroll(0,0);
       },
       showPage : function(page){
         settings["imageIndex"] = page;
@@ -228,48 +266,15 @@
       updateOverlay : function(){
         var s = (settings["imageIndex"] + 1) + ' / ' + settings["images"].length;
 
-        if(shortcut.commandMode)
+        if(shortcut.commandMode) {
           s += ' CM';
+        };
 
         settings["imageOverlay"].html(s);
       },
       toggleCommandMode : function(){
         settings["commandMode"] = (!settings["commandMode"]);
         ImageViewer.updateOverlay();
-      },
-      rotate: function(increment){
-          image = '#' + settings["mainDivId"] + '-full-image-' + settings["imageIndex"];
-          current_angle = $(image).attr('angle');
-          
-          if (current_angle == undefined)
-            current_angle = 0;
-
-          $(image).css('width', '100%');
-          $(image).rotate(parseInt(current_angle, 10) + increment);
-          settings["imageViewerImg"] = $(image);
-
-          settings["imageViewerImg"].attr('angle',(parseInt(current_angle, 10) + increment).toString());
-          ImageViewer.zoomAbsolute(75);
-        },
-      print : function() {
-        var myWindow = window.open("", '_newtab') ;
-        var image_tags = "";
-
-        $.each(settings["images"], function(index, image) {
-          image_tags += '<img style="float:left;clear:both;" src="' + image + '" />';
-        });
-
-        var print_script = '<script type="text/javascript">' +
-                            'function PrintWindow() { window.print();CheckWindowState(); }' +
-                              'function CheckWindowState(){' +
-                              'if(document.readyState=="complete")' +
-                                '{window.close();}' +
-                              'else{setTimeout("CheckWindowState()", 2000)}}' +
-                                'PrintWindow();' + 
-                            '</script>' 
-
-        myWindow.document.write(image_tags + print_script)
-        myWindow.document.close()
       }
     };
 
@@ -283,6 +288,6 @@
       return ImageViewer.init.apply( this, arguments);
     }  else {
       $.error( 'Method ' +  method + ' does not exist on jQuery.imageViewer' );
-    }
+    };
   };
 })(jQuery);
