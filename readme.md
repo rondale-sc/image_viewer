@@ -21,24 +21,24 @@ add to the body of your html
 
 Call the plugin like so: 
 
-    $("#your_div").imageViewer(["Array", "of", "Images"], {"your_options":"go_here"})
+    $("#your_div").imageViewer(["Array", "of", "Images"])
        
-To manually call functions found in the ImageViewer methods list simply 
-
-    $("#your_div").imageViewer("method_name", "arguments")
+To manually call publicly accessible functions simply 
     
+    $("#your_div").imageViewer.zoom(10)
+    
+Available methods are:
+
+* zoom(increment)
+* scroll(top, left)
+* scrollPage(increment)
+* rotate(degree)
+* print()
+
+
 The plugin is scoped so that namespace pollution is limited significantly.  Also the internal state of the settings hash is saved to 
 .data() function and will be preserved by id (ie #your_div)
-### Settings ###
-As of right now you can only pass in settings on init.  Pass them in like so:
 
-    $('#your_div').imageViewer(["Array", "of", "Images"], {"your_options":"go_here"})
-    
-Available options are
-
-* "width", Set the width of the containing object.  If you would like to set this in your css file type '#your_div {width:1234 !important;} in your css
-* "zoomLevel"
-* "increment"
 
 ### Available Shortcuts ###
 
