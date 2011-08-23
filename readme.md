@@ -35,10 +35,13 @@ Available methods are:
 * rotate(degree)
 * print()
 
+Nav Links containing these functions as onclick events are created by default just above the window pane.  If you would like to
+suppress these pass 'nav_links':false like so
 
-The plugin is scoped so that namespace pollution is limited significantly.  Also the internal state of the settings hash is saved to 
-.data() function and will be preserved by id (ie #your_div)
+    $('#your_div').imageViewer(["Array", "of", "Images"], {'nav_links':false})
 
+jQuery allows for the plugins to be built in a way that limits namespace pollution significantly so you can have multiple
+imageViewers dispayed at once and call them independently (maybe to toggle visiblility between two sets of images). 
 
 ### Available Shortcuts ###
 
