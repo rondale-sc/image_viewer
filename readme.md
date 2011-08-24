@@ -21,24 +21,27 @@ add to the body of your html
 
 Call the plugin like so: 
 
-    $("#your_div").imageViewer(["Array", "of", "Images"], {"your_options":"go_here"})
+    $("#your_div").imageViewer(["Array", "of", "Images"])
        
-To manually call functions found in the ImageViewer methods list simply 
-
-    $("#your_div").imageViewer("method_name", "arguments")
+To manually call publicly accessible functions simply 
     
-The plugin is scoped so that namespace pollution is limited significantly.  Also the internal state of the settings hash is saved to 
-.data() function and will be preserved by id (ie #your_div)
-### Settings ###
-As of right now you can only pass in settings on init.  Pass them in like so:
-
-    $('#your_div').imageViewer(["Array", "of", "Images"], {"your_options":"go_here"})
+    $("#your_div").imageViewer.zoom(10)
     
-Available options are
+Available methods are:
 
-* "width", Set the width of the containing object.  If you would like to set this in your css file type '#your_div {width:1234 !important;} in your css
-* "zoomLevel"
-* "increment"
+* zoom(increment)
+* scroll(top, left)
+* scrollPage(increment)
+* rotate(degree)
+* print()
+
+Nav Links containing these functions as onclick events are created by default just above the window pane.  If you would like to
+suppress these pass 'nav_links':false like so
+
+    $('#your_div').imageViewer(["Array", "of", "Images"], {'nav_links':false})
+
+jQuery allows for the plugins to be built in a way that limits namespace pollution significantly so you can have multiple
+imageViewers dispayed at once and call them independently (maybe to toggle visiblility between two sets of images). 
 
 ### Available Shortcuts ###
 
