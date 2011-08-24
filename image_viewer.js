@@ -59,7 +59,7 @@
       var image_tags = "";
 
       $.each(settings["images"], function(index, image) {
-        image_tags += '<img style="float:left;clear:both;" src="' + image + '" />';
+        image_tags += '<img style="float:left;clear:both;width:100%;" src="' + image + '" />';
       });
 
       var print_script = '<script type=\'text/javascript\'>' +
@@ -135,7 +135,7 @@
 
       return '<a href="#" onclick="' +
       '$(\'' + div_id + '\')' +
-      '.imageViewer.' +  call + '">' + 
+      '.imageViewer.' +  call + ';return false;">' + 
       name +
       '</a>';
     }
