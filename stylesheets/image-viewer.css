@@ -6,7 +6,8 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
 
 #wrapper { width:650px;margin:auto;}
 
-#nav_links td, #nav_links a {
+.nav_links {width:100%;}
+.nav_links td, .nav_links a {
   text-align:center;
   font-size:14px;
   font-weight:500;
@@ -55,3 +56,38 @@ h1 { font-family:"Amaranth";font-size:90px;margin:10px;text-align:center;}
   float:  left;
 }
 .center {text-align:center;}
+
+/* MODAL! */
+
+#mask {
+  position:absolute;
+  z-index:9000;
+  background-color:#000;
+  display:none;
+}
+
+#key-bindings .window {
+  position:absolute;
+  width:440px;
+  height:200px;
+  display:none;
+  z-index:9999;
+  padding:20px;
+}
+
+#key-bindings #dialog {
+  background-color:#7289A1;
+  color:#AEBFD0;
+  border:2px solid white;
+  width:400px; 
+  height:275px;
+}
+
+#key-bindings #dialog a {
+  color:#AEBFD0;
+  font-size:12px;
+}
+
+
+
+

@@ -27,6 +27,23 @@
       };
       showPage(settings["imageIndex"]);
     };
+    $.fn.imageViewer.displayLegend =  function(){
+      var id = $('#dialog') 
+      var maskHeight = $(document).height();
+      var maskWidth = $(window).width();
+
+      $('#mask').css({'width':maskWidth,'height':maskHeight});
+      $('#mask').fadeIn(600);
+      $('#mask').fadeTo("slow",0.3);
+
+      var winH = $(window).height();
+      var winW = $(window).width();
+
+      $(id).css('top',  winH/2-$(id).height()/2);
+      $(id).css('left', winW/2-$(id).width()/2);
+
+      $(id).fadeIn(2000); 
+    }
 
     $.fn.imageViewer.scroll =  function(left, top){
       settings["currentImageDiv"].scrollTop(settings["currentImageDiv"].scrollTop() + top);
@@ -92,10 +109,47 @@
       setupKeyBindings();
       setupImages(image_path_array);
       setupHeight();
+      setupLegend();
+      setupMaskListener();
       if (settings['nav_links'] == true) {createNavTable();};
       handleWindowResize();
     }
+    function setupLegend() {
+      var modal_container = "<div id='key-bindings'></div>";
+      var mask_div = "<div id='mask'></div>";
 
+      var key_binding_div = "<div class='window' id='dialog'>" + 
+        "<h5>Legend</h5>" + 
+         "<p>'/' (slash) to toggle Command Mode</p>" +
+          "<ul>" +
+            "<li>'i' = Zoom In</li>" +
+            "<li>'k' = Zoom Out</li>" +
+            "<li>'l' = Next</li>" +
+            "<li>'j' = Previous</li>" +
+            "<li>'e' = Scroll Up</li>" +
+            "<li>'d' = Scroll Down</li>" +
+            "<li>'s' = Scroll Left</li>" +
+            "<li>'f' = Scroll Right</li>" +
+            "<li>'r' = Rotate Clockwise</li>" +
+          "</ul>" +
+          "<a href='#' class='close'>Close</a>"
+      "</div>";
+
+      $('body').prepend(modal_container);
+      $('#key-bindings').append(key_binding_div);
+      $('#key-bindings').append(mask_div);
+    }
+    function setupMaskListener(){
+      $('.window .close').click(function (e) {
+              //Cancel the link behavior
+              e.preventDefault();
+              $('#mask, .window').hide();
+          });
+      $('#mask').click(function () {
+          $(this).hide();
+          $('.window').hide();
+      });
+    }
     function reload(){
       image_array                 = settings["images"];
       settings["zoomLevel"]       = 75;
@@ -111,7 +165,6 @@
     }
 
     function createNavTable() {
-      console.log(createNavLink('scroll(-1 * ' + settings["increment"], 'left'))
       table = '<table class="nav_links">' + 
       '<tr>' +
       '<td>' + createNavLink('scrollPage(-1)', 'previous') + '</td>' + 
@@ -122,14 +175,14 @@
       '<td>' + createNavLink('scroll(0,' + settings["increment"] + ")", 'down') + '</td>' + 
       '<td>' + createNavLink('zoom(' + settings["increment"] + ")", 'zoom in') + '</td>' + 
       '<td>' + createNavLink('zoom(-1 * ' + settings["increment"] + ")", 'zoom out') + '</td>' +
-      '<td>' + createNavLink('rotate(90)', 'rotate') + '</td>' +  
-      '<td>' + createNavLink('print()', 'print') + '</td>' +  
+      '<td>' + createNavLink('rotate(90)', 'rotate') + '</td>' +
+      '<td>' + createNavLink('print()', 'print') + '</td>' +
+      '<td>' + createNavLink('displayLegend()', 'Legend') + '</td>' + 
       '</tr>' +
       '</table>';
 
       settings["mainDiv"].prepend(table);
     }
-
     function createNavLink( call, name ) {
       var div_id = '#' + settings["mainDivId"];
 
